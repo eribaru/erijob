@@ -1,22 +1,62 @@
-import django
-from django.contrib.auth.base_user import AbstractBaseUser
-from django.contrib.auth.models import User
-from django.db import models
 import uuid
+
+from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
+from django.db import models
+
+
+class MyUserManager(BaseUserManager):
+    def create_user(self, email, data_nascimento, password=None):
+        """
+        Creates and saves a User with the given email, date of
+        birth and password.
+        """
+        if not email:
+            raise ValueError('Users must have an email address')
+
+        user = self.model(
+            email=self.normalize_email(email),
+            data_nascimento=data_nascimento,
+        )
+
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, data_nascimento, password=None):
+        """
+        Creates and saves a superuser with the given email, date of
+        birth and password.
+        """
+        user = self.create_user(
+            email,
+            password=password,
+            data_nascimento=data_nascimento,
+        )
+        user.is_admin = True
+        user.save(using=self._db)
+        return user
 
 
 class Usuario(AbstractBaseUser):
+    """User model."""
+
     class Meta:
         db_table = 'tb_usuario'
+
     TIPO_PERFIL = [
         ('recrutador', 'Recrutador'), ('candidato', 'Candidato'),
     ]
+    is_active = models.BooleanField(default=True)
+    is_admin = models.BooleanField(default=False)
+
+    username = None
     id = models.UUIDField(
         primary_key=True,
         default=uuid.uuid4,
         null=False,
         blank=True)
 
+    email = models.EmailField(max_length=30, null=False, unique=True, blank=False)
     cpf = models.CharField(
         max_length=11,
         null=False,
@@ -28,10 +68,7 @@ class Usuario(AbstractBaseUser):
         null=False,
         blank=False,
         choices=TIPO_PERFIL)
-
-    # email = models.EmailField(max_length=30, null=False,  unique=True,   blank=False)
-
-    data_nascimento = models.DateField(
+    date_of_birth = models.DateField(
         null=False,
         blank=False)
 
@@ -39,11 +76,39 @@ class Usuario(AbstractBaseUser):
         null=False,
         blank=False,
         max_length=11)
-    user = models.OneToOneField(User)
+
+    objects = MyUserManager()
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
+
+
+
+    def __str__(self):
+        return self.email
+
+    def has_perm(self, perm, obj=None):
+        "Does the user have a specific permission?"
+        # Simplest possible answer: Yes, always
+        return True
+
+    def has_module_perms(self, app_label):
+        "Does the user have permissions to view the app `app_label`?"
+        # Simplest possible answer: Yes, always
+        return True
+
+    @property
+    def is_staff(self):
+        "Is the user a member of staff?"
+        # Simplest possible answer: All admins are staff
+        return self.is_admin
+
 
 class Empresa(models.Model):
     class Meta:
         db_table = 'tb_empresa'
+
     id = models.UUIDField(
         primary_key=True,
         default=uuid.uuid4,
@@ -66,12 +131,13 @@ class Empresa(models.Model):
         null=False,
         blank=False)
 
-    sede = models.ForeignKey('Cidade', db_column='cod_cidade',on_delete=models.CASCADE)
+    sede = models.ForeignKey('Cidade', db_column='cod_cidade', on_delete=models.CASCADE)
 
 
 class Curriculo(models.Model):
     class Meta:
         db_table = 'tb_curriculo'
+
     id = models.UUIDField(
         primary_key=True,
         default=uuid.uuid4,
@@ -105,6 +171,7 @@ class InstituicaoEnsino(models.Model):
     class Meta:
         ordering = ('nome',)
         db_table = 'tb_instituicao'
+
     id = models.UUIDField(
         primary_key=True,
         default=uuid.uuid4,
@@ -123,6 +190,7 @@ class Formacao(models.Model):
     class Meta:
         ordering = ('inicio',)
         db_table = 'tb_formacao'
+
     TIPO_FORMACAO = [
         ('médio', 'Médio'), ('superior', 'Superior'), ('especialização', 'Especialização'), ('mestrado', 'Mestrado'),
         ('doutorado', 'doutorado'),
@@ -166,6 +234,7 @@ class StatusEntrevista(models.Model):
     class Meta:
         ordering = ('valor',)
         db_table = 'tb_status_entrevista'
+
     id = models.UUIDField(
         primary_key=True,
         default=uuid.uuid4,
@@ -181,6 +250,7 @@ class StatusInscricao(models.Model):
     class Meta:
         ordering = ('valor',)
         db_table = 'tb_status_inscricao'
+
     id = models.UUIDField(
         primary_key=True,
         default=uuid.uuid4,
@@ -192,13 +262,11 @@ class StatusInscricao(models.Model):
         blank=False)
 
 
-
-
-
 class Experiencia(models.Model):
     class Meta:
         ordering = ('inicio',)
         db_table = 'tb_experiencia'
+
     TIPO_FORMACAO = [
         ('médio', 'Médio'), ('superior', 'Superior'), ('especialização', 'Especialização'), ('mestrado', 'Mestrado'),
         ('doutorado', 'doutorado'),
@@ -247,8 +315,10 @@ class Vaga(models.Model):
     class Meta:
         ordering = ('data_cadastro',)
         db_table = 'tb_vaga'
+
     TIPO_CONTRATO = [
-        ('indeterminado', 'Indeterminado'), ('indeterminado', 'Determinado'), ('obra_certa', 'Obra certa'), ('intermitente', 'Intermitente'),
+        ('indeterminado', 'Indeterminado'), ('indeterminado', 'Determinado'), ('obra_certa', 'Obra certa'),
+        ('intermitente', 'Intermitente'),
     ]
     TIPO_REGIME = [
         ('clt', 'CLT'), ('pj', 'PJ')
@@ -353,6 +423,7 @@ class Inscricao(models.Model):
     class Meta:
         ordering = ('data_inscricao',)
         db_table = 'tb_inscricao'
+
     id = models.UUIDField(
         primary_key=True,
         default=uuid.uuid4,
@@ -362,7 +433,7 @@ class Inscricao(models.Model):
     feedback = models.CharField(
         max_length=4000,
         null=True,
-        blank=True,)
+        blank=True, )
 
     data_inscricao = models.DateField(
         null=False,
@@ -374,7 +445,7 @@ class Inscricao(models.Model):
         null=True,
         blank=True,
     )
-    vaga  = models.ForeignKey(Vaga, on_delete=models.CASCADE)
+    vaga = models.ForeignKey(Vaga, on_delete=models.CASCADE)
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     status = models.ForeignKey(StatusInscricao, on_delete=models.CASCADE)
 
@@ -383,6 +454,7 @@ class Entrevista(models.Model):
     class Meta:
         ordering = ('data',)
         db_table = 'tb_entrevista'
+
     id = models.UUIDField(
         primary_key=True,
         default=uuid.uuid4,
@@ -400,7 +472,7 @@ class Entrevista(models.Model):
         auto_created=True
     )
     status = models.ForeignKey(StatusEntrevista, on_delete=models.CASCADE)
-    inscricao = models.ForeignKey(Inscricao,db_column='id_inscricao', on_delete=models.CASCADE)
+    inscricao = models.ForeignKey(Inscricao, db_column='id_inscricao', on_delete=models.CASCADE)
 
 
 class Pais(models.Model):

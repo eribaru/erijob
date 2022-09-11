@@ -3,12 +3,6 @@ from rest_framework import serializers
 from api.models import *
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = User
-        fields = ['url', 'username', 'email', 'groups']
-
-
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Group
@@ -19,7 +13,7 @@ class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
         fields = [
-           'url', 'email', 'data_nascimento', 'telefone', 'password'
+           'url', 'email', 'date_of_birth', 'telefone', 'password'
         ]
 
 

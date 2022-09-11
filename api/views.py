@@ -3,11 +3,11 @@ from django.contrib.auth.models import Group
 from rest_framework import viewsets, permissions
 
 from api.models import Empresa, Estado, Cidade, Curriculo, InstituicaoEnsino, Formacao, StatusInscricao, \
-    StatusEntrevista, Experiencia, Inscricao, Vaga, Usuario
+    StatusEntrevista, Experiencia, Inscricao, Vaga, Usuario, Pais
 from api.serializers import EmpresaSerializer, EstadoSerializer, CidadeSerializer, \
     CurriculoSerializer, InstituicaoEnsinoSerializer, FormacaoSerializer, StatusInscricaoSerializer, \
     StatusEntrevistaSerializer, ExperienciaSerializer, InscricaoSerializer, VagaSerializer, UsuarioSerializer, \
-    GroupSerializer
+    GroupSerializer, PaisSerializer
 
 
 class GroupViewSet(viewsets.ModelViewSet):
@@ -37,10 +37,17 @@ class EstadoViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
 
+class PaisViewSet(viewsets.ModelViewSet):
+    queryset = Pais.objects.all()
+    serializer_class = PaisSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
 class CidadeViewSet(viewsets.ModelViewSet):
     queryset = Cidade.objects.all()
     serializer_class = CidadeSerializer
     permission_classes = [permissions.IsAuthenticated]
+    filterset_fields = ['cod_estado', 'nom_cidade']
 
 
 class ExperienciaViewSet(viewsets.ModelViewSet):

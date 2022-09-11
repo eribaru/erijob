@@ -29,7 +29,7 @@ class PaisSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pais
         fields = [
-            'id', 'cod_pais', 'sgl_pais', 'nom_pais',
+             'cod_pais', 'sgl_pais', 'nom_pais',
         ]
 
 
@@ -37,7 +37,7 @@ class EstadoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Estado
         fields = [
-            'id', 'cod_estado', 'cod_pais', 'nom_estado', 'sgl_estado'
+             'cod_estado', 'cod_pais', 'nom_estado', 'sgl_estado'
         ]
 
 
@@ -45,7 +45,7 @@ class CidadeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cidade
         fields = [
-            'id', 'cod_cidade', 'cod_estado', 'nom_cidade',
+             'cod_cidade', 'cod_estado', 'nom_cidade',
         ]
 
 
@@ -99,7 +99,7 @@ class StatusInscricaoSerializer(serializers.ModelSerializer):
 
 class InscricaoSerializer(serializers.ModelSerializer):
     class Meta:
-        model = StatusInscricao
+        model = Inscricao
         fields = [
             'id', 'feedback', 'data_inscricao', 'apto_entrevista', 'vaga', 'feedback', 'usuario', 'status',
         ]

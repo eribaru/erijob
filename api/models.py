@@ -5,7 +5,7 @@ from django.db import models
 
 
 class MyUserManager(BaseUserManager):
-    def create_user(self, email, data_nascimento, password=None):
+    def create_user(self, email, date_of_birth=None, password=None):
         """
         Creates and saves a User with the given email, date of
         birth and password.
@@ -15,14 +15,14 @@ class MyUserManager(BaseUserManager):
 
         user = self.model(
             email=self.normalize_email(email),
-            data_nascimento=data_nascimento,
+            date_of_birth=date_of_birth,
         )
 
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, data_nascimento, password=None):
+    def create_superuser(self, email, date_of_birth=None, password=None):
         """
         Creates and saves a superuser with the given email, date of
         birth and password.
@@ -30,7 +30,7 @@ class MyUserManager(BaseUserManager):
         user = self.create_user(
             email,
             password=password,
-            data_nascimento=data_nascimento,
+            date_of_birth=date_of_birth,
         )
         user.is_admin = True
         user.save(using=self._db)
@@ -59,18 +59,23 @@ class Usuario(AbstractBaseUser):
     email = models.EmailField(max_length=30, null=False, unique=True, blank=False)
     cpf = models.CharField(
         max_length=11,
-        null=False,
+        null=True,
         unique=True,
-        blank=False)
+        blank=True)
+
+    nome = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True)
 
     tipo = models.CharField(
         max_length=30,
-        null=False,
-        blank=False,
+        null=True,
+        blank=True,
         choices=TIPO_PERFIL)
     date_of_birth = models.DateField(
-        null=False,
-        blank=False)
+        null=True,
+        blank=True)
 
     telefone = models.CharField(
         null=False,
@@ -498,6 +503,9 @@ class Estado(models.Model):
     def __unicode__(self):
         return self.nom_estado
 
+    def __str__(self):
+        return self.nom_estado
+
 
 class Cidade(models.Model):
     class Meta:
@@ -509,4 +517,7 @@ class Cidade(models.Model):
     nom_cidade = models.CharField(max_length=255, db_column='nom_cidade')
 
     def __unicode__(self):
+        return self.nom_cidade
+
+    def __str__(self):
         return self.nom_cidade

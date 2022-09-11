@@ -1,14 +1,16 @@
+import django
+from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.models import User
 from django.db import models
 import uuid
 
 
-class Usuario(models.Model):
+class Usuario(AbstractBaseUser):
     class Meta:
         db_table = 'tb_usuario'
     TIPO_PERFIL = [
         ('recrutador', 'Recrutador'), ('candidato', 'Candidato'),
     ]
-
     id = models.UUIDField(
         primary_key=True,
         default=uuid.uuid4,
@@ -27,9 +29,7 @@ class Usuario(models.Model):
         blank=False,
         choices=TIPO_PERFIL)
 
-    email = models.EmailField(
-        null=False,
-        blank=False)
+    # email = models.EmailField(max_length=30, null=False,  unique=True,   blank=False)
 
     data_nascimento = models.DateField(
         null=False,
@@ -39,7 +39,7 @@ class Usuario(models.Model):
         null=False,
         blank=False,
         max_length=11)
-
+    user = models.OneToOneField(User)
 
 class Empresa(models.Model):
     class Meta:
@@ -78,22 +78,22 @@ class Curriculo(models.Model):
         null=False,
         blank=True)
 
-    objetivo = models.CharField(
+    objetivo = models.TextField(
         max_length=4000,
         null=False,
         blank=False)
 
-    contato = models.CharField(
+    contato = models.TextField(
         max_length=200,
         null=False,
         blank=False)
 
-    dados_pessoais = models.CharField(
+    dados_pessoais = models.TextField(
         null=False,
         blank=False,
         max_length=4000)
 
-    sobre = models.CharField(
+    sobre = models.TextField(
         null=False,
         blank=False,
         max_length=4000)
@@ -193,58 +193,6 @@ class StatusInscricao(models.Model):
 
 
 
-class Inscricao(models.Model):
-    class Meta:
-        ordering = ('data_inscricao',)
-        db_table = 'tb_inscricao'
-    id = models.UUIDField(
-        primary_key=True,
-        default=uuid.uuid4,
-        null=False,
-        blank=True)
-
-    feedback = models.CharField(
-        max_length=4000,
-        null=True,
-        blank=True,)
-
-    data_inscricao = models.DateField(
-        null=False,
-        blank=False,
-        auto_created=True
-    )
-
-    apto_entrevista = models.BooleanField(
-        null=True,
-        blank=True,
-    )
-
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    status = models.ForeignKey(StatusInscricao, on_delete=models.CASCADE)
-
-
-class Entrevista(models.Model):
-    class Meta:
-        ordering = ('data',)
-        db_table = 'tb_entrevista'
-    id = models.UUIDField(
-        primary_key=True,
-        default=uuid.uuid4,
-        null=False,
-        blank=True)
-
-    feedback = models.CharField(
-        max_length=4000,
-        null=True,
-        blank=True, )
-
-    data = models.DateField(
-        null=False,
-        blank=False,
-        auto_created=True
-    )
-
-    status = models.ForeignKey(StatusEntrevista, on_delete=models.CASCADE)
 
 
 class Experiencia(models.Model):
@@ -399,6 +347,60 @@ class Vaga(models.Model):
     )
 
     empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
+
+
+class Inscricao(models.Model):
+    class Meta:
+        ordering = ('data_inscricao',)
+        db_table = 'tb_inscricao'
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        null=False,
+        blank=True)
+
+    feedback = models.CharField(
+        max_length=4000,
+        null=True,
+        blank=True,)
+
+    data_inscricao = models.DateField(
+        null=False,
+        blank=False,
+        auto_created=True
+    )
+
+    apto_entrevista = models.BooleanField(
+        null=True,
+        blank=True,
+    )
+    vaga  = models.ForeignKey(Vaga, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    status = models.ForeignKey(StatusInscricao, on_delete=models.CASCADE)
+
+
+class Entrevista(models.Model):
+    class Meta:
+        ordering = ('data',)
+        db_table = 'tb_entrevista'
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        null=False,
+        blank=True)
+
+    feedback = models.CharField(
+        max_length=4000,
+        null=True,
+        blank=True, )
+
+    data = models.DateField(
+        null=False,
+        blank=False,
+        auto_created=True
+    )
+    status = models.ForeignKey(StatusEntrevista, on_delete=models.CASCADE)
+    inscricao = models.ForeignKey(Inscricao,db_column='id_inscricao', on_delete=models.CASCADE)
 
 
 class Pais(models.Model):

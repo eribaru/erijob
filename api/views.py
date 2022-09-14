@@ -22,6 +22,7 @@ class GroupViewSet(viewsets.ModelViewSet):
 class UsuarioViewSet(viewsets.ModelViewSet):
     queryset = Usuario.objects.all()
     serializer_class = UsuarioSerializer
+    lookup_fields = ['email']
     permission_classes = [permissions.IsAuthenticated]
 
 

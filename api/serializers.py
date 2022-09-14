@@ -10,6 +10,7 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class UsuarioSerializer(serializers.ModelSerializer):
+    url = serializers.HyperlinkedIdentityField(view_name="api:usuario-detail")
     class Meta:
         model = Usuario
         fields = [

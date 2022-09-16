@@ -6,7 +6,7 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
 
 
-from api.models import Usuario
+from erijob.apps.api.models import Usuario
 
 
 class UserCreationForm(forms.ModelForm):

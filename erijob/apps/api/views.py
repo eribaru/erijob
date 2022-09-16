@@ -2,9 +2,9 @@
 from django.contrib.auth.models import Group
 from rest_framework import viewsets, permissions
 
-from api.models import Empresa, Estado, Cidade, Curriculo, InstituicaoEnsino, Formacao, StatusInscricao, \
+from erijob.apps.api.models import Empresa, Estado, Cidade, Curriculo, InstituicaoEnsino, Formacao, StatusInscricao, \
     StatusEntrevista, Experiencia, Inscricao, Vaga, Usuario, Pais
-from api.serializers import EmpresaSerializer, EstadoSerializer, CidadeSerializer, \
+from erijob.apps.api.serializers import EmpresaSerializer, EstadoSerializer, CidadeSerializer, \
     CurriculoSerializer, InstituicaoEnsinoSerializer, FormacaoSerializer, StatusInscricaoSerializer, \
     StatusEntrevistaSerializer, ExperienciaSerializer, InscricaoSerializer, VagaSerializer, UsuarioSerializer, \
     GroupSerializer, PaisSerializer
@@ -84,7 +84,6 @@ class StatusEntrevistaViewSet(viewsets.ModelViewSet):
     queryset = StatusEntrevista.objects.all()
     serializer_class = StatusEntrevistaSerializer
     permission_classes = [permissions.IsAuthenticated]
-
 
 
 class InscricaoViewSet(viewsets.ModelViewSet):

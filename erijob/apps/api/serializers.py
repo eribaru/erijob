@@ -1,6 +1,6 @@
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import Group
 from rest_framework import serializers
-from api.models import *
+from erijob.apps.api.models import *
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
@@ -11,6 +11,7 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 
 class UsuarioSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedIdentityField(view_name="api:usuario-detail")
+
     class Meta:
         model = Usuario
         fields = [

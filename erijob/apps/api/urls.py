@@ -1,5 +1,5 @@
 from rest_framework.routers import DefaultRouter
-from api.views import EmpresaViewSet, CidadeViewSet, EstadoViewSet, FormacaoViewSet, ExperienciaViewSet, \
+from erijob.apps.api.views import EmpresaViewSet, CidadeViewSet, EstadoViewSet, FormacaoViewSet, ExperienciaViewSet, \
     StatusEntrevistaViewSet, StatusInscricaoViewSet, InscricaoViewSet, VagaViewSet, UsuarioViewSet, PaisViewSet, \
     CurriculoViewSet
 

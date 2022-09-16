@@ -31,7 +31,7 @@ CSRF_COOKIE_SECURE = config('CSRF_COOKIE_SECURE', cast=bool)
 SECURE_SSL_REDIRECT = config('SECURE_SSL_REDIRECT', cast=bool)
 SECURE_HSTS_SECONDS = config('SECURE_HSTS_SECONDS')
 SECURE_HSTS_PRELOAD = config('SECURE_HSTS_PRELOAD', cast=bool)
-
+SECURE_HSTS_INCLUDE_SUBDOMAINS = config('SECURE_HSTS_INCLUDE_SUBDOMAINS', cast=bool)
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
 
 # Application definition

@@ -45,9 +45,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'material',
     'erijob',
     'erijob.apps',
     'erijob.apps.api',
+    'erijob.apps.frontend',
 ]
 
 REST_FRAMEWORK = {

@@ -1,3 +1,6 @@
+from abc import ABC
+
+from django.contrib.auth import authenticate
 from django.contrib.auth.models import Group
 from rest_framework import serializers
 from erijob.apps.api.models import *
@@ -22,7 +25,7 @@ class UsuarioSerializer(serializers.ModelSerializer):
 class UsuarioCadastroSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
-        fields = ('id', 'username', 'password', 'email', 'nome','cpf','date_of_birth', 'tipo')
+        fields = ('id', 'username', 'password', 'email', 'nome', 'cpf', 'date_of_birth', 'tipo')
         write_only_fields = ('password',)
         read_only_fields = ('id',)
 
@@ -61,7 +64,7 @@ class EstadoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Estado
         fields = [
-             'cod_estado', 'cod_pais', 'nom_estado', 'sgl_estado'
+            'cod_estado', 'cod_pais', 'nom_estado', 'sgl_estado'
         ]
 
 
@@ -69,7 +72,7 @@ class CidadeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cidade
         fields = [
-             'cod_cidade', 'cod_estado', 'nom_cidade',
+            'cod_cidade', 'cod_estado', 'nom_cidade',
         ]
 
 

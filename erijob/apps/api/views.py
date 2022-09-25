@@ -1,8 +1,12 @@
 # Create your views here.
+from django.contrib.auth import login
 from django.contrib.auth.models import Group
 from rest_framework import viewsets, permissions
+from rest_framework.authentication import BasicAuthentication
+from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.mixins import CreateModelMixin
 from rest_framework.viewsets import GenericViewSet
+from knox.views import LoginView as KnoxLoginView
 
 from erijob.apps.api.models import Empresa, Estado, Cidade, Curriculo, InstituicaoEnsino, Formacao, StatusInscricao, \
     StatusEntrevista, Experiencia, Inscricao, Vaga, Usuario, Pais
@@ -32,6 +36,17 @@ class CreateUserView(CreateModelMixin, GenericViewSet):
     permission_classes = []
     queryset = Usuario.objects.all()
     serializer_class = UsuarioCadastroSerializer
+
+
+class LoginView(KnoxLoginView):
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request, format=None):
+        serializer = AuthTokenSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        login(request, user)
+        return super(LoginView, self).post(request, format=None)
 
 
 class EmpresaViewSet(viewsets.ModelViewSet):

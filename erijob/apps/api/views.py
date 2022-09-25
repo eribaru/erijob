@@ -1,6 +1,7 @@
 # Create your views here.
 from django.contrib.auth import login
 from django.contrib.auth.models import Group
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework import viewsets, permissions
 from rest_framework.authentication import BasicAuthentication
 from rest_framework.authtoken.serializers import AuthTokenSerializer
@@ -41,6 +42,7 @@ class CreateUserView(CreateModelMixin, GenericViewSet):
 class LoginView(KnoxLoginView):
     permission_classes = (permissions.AllowAny,)
 
+    @csrf_exempt
     def post(self, request, format=None):
         serializer = AuthTokenSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)

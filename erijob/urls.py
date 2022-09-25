@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.urls import include, path
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework import routers
 from knox import views as knox_views
 from erijob.apps.api.views import LoginView
@@ -13,9 +14,9 @@ router = routers.DefaultRouter()
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     path('api/v1/', include('erijob.apps.api.urls', namespace='erijob.apps.api')),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path(r'api/auth/', include('knox.urls')),
     path('admin/', admin.site.urls),
-    path(r'login/', LoginView.as_view()),
+    path(r'login/', csrf_exempt(LoginView.as_view())),
     path(r'logout/', knox_views.LogoutView.as_view(), name='knox_logout'),
     path(r'logoutall/', knox_views.LogoutAllView.as_view(), name='knox_logoutall'),
 ]

@@ -6,8 +6,8 @@ from erijob.apps.api.views import EmpresaViewSet, CidadeViewSet, EstadoViewSet, 
 app_name = 'api'
 
 router = DefaultRouter(trailing_slash=False)
-router.register(r'usuarios', UsuarioViewSet)
 router.register(r'contas/registrar', CreateUserView)
+router.register(r'usuarios', UsuarioViewSet)
 router.register(r'empresas', EmpresaViewSet)
 router.register(r'estados', EstadoViewSet)
 router.register(r'cidades', CidadeViewSet)

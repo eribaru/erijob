@@ -15,8 +15,30 @@ class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
         fields = [
-           'url', 'email', 'date_of_birth', 'telefone', 'password'
+            'url', 'email', 'date_of_birth', 'telefone', 'password', 'tipo', 'cpf'
         ]
+
+
+class UsuarioCadastroSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Usuario
+        fields = ('id', 'username', 'password', 'email', 'nome','cpf','date_of_birth', 'tipo')
+        write_only_fields = ('password',)
+        read_only_fields = ('id',)
+
+    def create(self, validated_data):
+        user = Usuario.objects.create(
+            email=validated_data['email'],
+            nome=validated_data['nome'],
+            cpf=validated_data['cpf'],
+            date_of_birth=validated_data['date_of_birth'],
+            tipo=validated_data['tipo']
+        )
+
+        user.set_password(validated_data['password'])
+        user.save()
+
+        return user
 
 
 class EmpresaSerializer(serializers.ModelSerializer):
@@ -31,7 +53,7 @@ class PaisSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pais
         fields = [
-             'cod_pais', 'sgl_pais', 'nom_pais',
+            'cod_pais', 'sgl_pais', 'nom_pais',
         ]
 
 

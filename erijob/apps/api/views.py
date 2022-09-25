@@ -1,13 +1,15 @@
 # Create your views here.
 from django.contrib.auth.models import Group
 from rest_framework import viewsets, permissions
+from rest_framework.mixins import CreateModelMixin
+from rest_framework.viewsets import GenericViewSet
 
 from erijob.apps.api.models import Empresa, Estado, Cidade, Curriculo, InstituicaoEnsino, Formacao, StatusInscricao, \
     StatusEntrevista, Experiencia, Inscricao, Vaga, Usuario, Pais
 from erijob.apps.api.serializers import EmpresaSerializer, EstadoSerializer, CidadeSerializer, \
     CurriculoSerializer, InstituicaoEnsinoSerializer, FormacaoSerializer, StatusInscricaoSerializer, \
     StatusEntrevistaSerializer, ExperienciaSerializer, InscricaoSerializer, VagaSerializer, UsuarioSerializer, \
-    GroupSerializer, PaisSerializer
+    GroupSerializer, PaisSerializer, UsuarioCadastroSerializer
 
 
 class GroupViewSet(viewsets.ModelViewSet):
@@ -24,6 +26,12 @@ class UsuarioViewSet(viewsets.ModelViewSet):
     serializer_class = UsuarioSerializer
     lookup_fields = ['email']
     permission_classes = [permissions.IsAuthenticated]
+
+
+class CreateUserView(CreateModelMixin, GenericViewSet):
+    permission_classes = []
+    queryset = Usuario.objects.all()
+    serializer_class = UsuarioCadastroSerializer
 
 
 class EmpresaViewSet(viewsets.ModelViewSet):
@@ -61,6 +69,7 @@ class InstituicaoEnsinoViewSet(viewsets.ModelViewSet):
     queryset = InstituicaoEnsino.objects.all()
     serializer_class = InstituicaoEnsinoSerializer
     permission_classes = [permissions.IsAuthenticated]
+
 
 class FormacaoViewSet(viewsets.ModelViewSet):
     queryset = Formacao.objects.all()

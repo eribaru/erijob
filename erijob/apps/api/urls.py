@@ -1,6 +1,4 @@
 from rest_framework.routers import DefaultRouter
-
-from erijob.apps.api import views
 from erijob.apps.api.views import EmpresaViewSet, CidadeViewSet, EstadoViewSet, FormacaoViewSet, ExperienciaViewSet, \
     StatusEntrevistaViewSet, StatusInscricaoViewSet, InscricaoViewSet, VagaViewSet, UsuarioViewSet, PaisViewSet, \
     CurriculoViewSet, CreateUserView
@@ -8,8 +6,8 @@ from erijob.apps.api.views import EmpresaViewSet, CidadeViewSet, EstadoViewSet, 
 app_name = 'api'
 
 router = DefaultRouter(trailing_slash=False)
-router.register(r'contas/registrar', CreateUserView)
 router.register(r'usuarios', UsuarioViewSet)
+router.register(r'contas/registrar', CreateUserView)
 router.register(r'empresas', EmpresaViewSet)
 router.register(r'estados', EstadoViewSet)
 router.register(r'cidades', CidadeViewSet)

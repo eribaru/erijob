@@ -18,7 +18,7 @@ class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
         fields = [
-            'url', 'email', 'date_of_birth', 'telefone', 'password', 'tipo', 'cpf'
+            'url', 'email', 'date_of_birth', 'telefone',  'tipo', 'cpf'
         ]
 
 

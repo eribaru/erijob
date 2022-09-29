@@ -50,6 +50,9 @@ class LoginView(KnoxLoginView):
         login(request, user)
         return super(LoginView, self).post(request, format=None)
 
+    def get_user_serializer_class(self):
+        return UsuarioSerializer
+
 
 class EmpresaViewSet(viewsets.ModelViewSet):
     queryset = Empresa.objects.all()

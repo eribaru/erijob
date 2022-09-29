@@ -9,12 +9,12 @@ from rest_framework.mixins import CreateModelMixin
 from rest_framework.viewsets import GenericViewSet
 from knox.views import LoginView as KnoxLoginView
 
-from erijob.apps.api.models import Empresa, Estado, Cidade, Curriculo, InstituicaoEnsino, Formacao, StatusInscricao, \
-    StatusEntrevista, Experiencia, Inscricao, Vaga, Usuario, Pais
-from erijob.apps.api.serializers import EmpresaSerializer, EstadoSerializer, CidadeSerializer, \
+from erijob.apps.api.models import Empresa, Cidade, Curriculo, InstituicaoEnsino, Formacao, StatusInscricao, \
+    StatusEntrevista, Experiencia, Inscricao, Vaga, Usuario
+from erijob.apps.api.serializers import EmpresaSerializer, CidadeSerializer, \
     CurriculoSerializer, InstituicaoEnsinoSerializer, FormacaoSerializer, StatusInscricaoSerializer, \
     StatusEntrevistaSerializer, ExperienciaSerializer, InscricaoSerializer, VagaSerializer, UsuarioSerializer, \
-    GroupSerializer, PaisSerializer, UsuarioCadastroSerializer
+    GroupSerializer, UsuarioCadastroSerializer
 
 
 class GroupViewSet(viewsets.ModelViewSet):
@@ -59,17 +59,6 @@ class EmpresaViewSet(viewsets.ModelViewSet):
     serializer_class = EmpresaSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-
-class EstadoViewSet(viewsets.ModelViewSet):
-    queryset = Estado.objects.all()
-    serializer_class = EstadoSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-
-class PaisViewSet(viewsets.ModelViewSet):
-    queryset = Pais.objects.all()
-    serializer_class = PaisSerializer
-    permission_classes = [permissions.IsAuthenticated]
 
 
 class CidadeViewSet(viewsets.ModelViewSet):

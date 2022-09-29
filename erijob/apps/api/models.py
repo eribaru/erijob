@@ -478,31 +478,18 @@ class Entrevista(models.Model):
     inscricao = models.ForeignKey(Inscricao, db_column='id_inscricao', on_delete=models.CASCADE)
 
 
-class Pais(models.Model):
-    class Meta:
-        ordering = ('nom_pais',)
-        db_table = 'tb_pais'
-
-    cod_pais = models.IntegerField(primary_key=True, db_column='cod_pais')
-    sgl_pais = models.CharField(max_length=2, db_column='sgl_pais')
-    nom_pais = models.CharField(max_length=255, db_column='nom_pais')
-
-
-class Estado(models.Model):
-    class Meta:
-        ordering = ('nom_estado',)
-        db_table = 'tb_estado'
-
-    cod_estado = models.IntegerField(primary_key=True, db_column='cod_estado')
-    cod_pais = models.OneToOneField(Pais, db_column='cod_pais', on_delete=models.CASCADE)
-    nom_estado = models.CharField(max_length=255, db_column='nom_estado')
-    sgl_estado = models.CharField(max_length=2, db_column='sgl_estado')
-
-    def __unicode__(self):
-        return self.nom_estado
-
-    def __str__(self):
-        return self.nom_estado
+STATE_CHOICES = (
+    ('AC', 'Acre'), ('AL', 'Alagoas'), ('AP', 'Amapá'),
+    ('AM', 'Amazonas'), ('BA', 'Bahia'), ('CE', 'Ceará'),
+    ('DF', 'Distrito Federal'), ('ES', 'Espírito Santo'),
+    ('GO', 'Goiás'), ('MA', 'Maranhão'), ('MT', 'Mato Grosso'),
+    ('MS', 'Mato Grosso do Sul'), ('MG', 'Minas Gerais'),
+    ('PA', 'Pará'), ('PB', 'Paraíba'), ('PR', 'Paraná'),
+    ('PE', 'Pernambuco'), ('PI', 'Piauí'), ('RJ', 'Rio de Janeiro'),
+    ('RN', 'Rio Grande do Norte'), ('RS', 'Rio Grande do Sul'),
+    ('RO', 'Rondônia'), ('RR', 'Roraima'), ('SC', 'Santa Catarina'),
+    ('SP', 'São Paulo'), ('SE', 'Sergipe'), ('TO', 'Tocantins')
+)
 
 
 class Cidade(models.Model):
@@ -511,7 +498,7 @@ class Cidade(models.Model):
         db_table = 'tb_cidade'
 
     cod_cidade = models.IntegerField(primary_key=True, db_column='cod_cidade')
-    cod_estado = models.OneToOneField(Estado, db_column='cod_estado', on_delete=models.CASCADE)
+    cod_estado = models.CharField(max_length=2, choices=STATE_CHOICES)
     nom_cidade = models.CharField(max_length=255, db_column='nom_cidade')
 
     def __unicode__(self):

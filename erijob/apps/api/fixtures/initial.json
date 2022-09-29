@@ -1,0 +1,9 @@
+[
+{"model": "api.statusEntrevista","pk": 1,"fields": {  "valor":  "Aprovado"} },
+{"model": "api.statusEntrevista","pk": 2,"fields": {  "valor":  "Reprovado"} },
+{"model": "api.statusEntrevista","pk": 3,"fields": {  "valor":  "Em analise"} },
+{"model": "api.statusInscricao","pk": 1,"fields": {  "valor":  "Aprovado"} },
+{"model": "api.statusInscricao","pk": 2,"fields": {  "valor":  "Reprovado"} },
+{"model": "api.statusInscricao","pk": 3,"fields": {  "valor":  "Em analise"} }
+]
+

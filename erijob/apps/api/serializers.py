@@ -18,7 +18,7 @@ class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
         fields = [
-            'url', 'email', 'date_of_birth', 'telefone',  'tipo', 'cpf'
+            'url', 'email', 'date_of_birth', 'telefone', 'tipo', 'cpf'
         ]
 
 
@@ -49,22 +49,6 @@ class EmpresaSerializer(serializers.ModelSerializer):
         model = Empresa
         fields = [
             'id', 'cnpj', 'nome', 'ramo', 'sede',
-        ]
-
-
-class PaisSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Pais
-        fields = [
-            'cod_pais', 'sgl_pais', 'nom_pais',
-        ]
-
-
-class EstadoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Estado
-        fields = [
-            'cod_estado', 'cod_pais', 'nom_estado', 'sgl_estado'
         ]
 
 

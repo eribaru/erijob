@@ -44,19 +44,21 @@ class UsuarioCadastroSerializer(serializers.ModelSerializer):
         return user
 
 
-class EmpresaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Empresa
-        fields = [
-            'id', 'cnpj', 'nome', 'ramo', 'sede',
-        ]
-
-
 class CidadeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cidade
         fields = [
             'cod_cidade', 'cod_estado', 'nom_cidade',
+        ]
+
+
+class EmpresaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Empresa
+        # sede = CidadeSerializer(many=False)
+        # depth = 2
+        fields = [
+            'id', 'cnpj', 'nome', 'ramo', 'sede'
         ]
 
 

@@ -137,6 +137,7 @@ class Empresa(models.Model):
     sede = models.ForeignKey('Cidade', db_column='cod_cidade', on_delete=models.CASCADE)
 
 
+
 class Curriculo(models.Model):
     class Meta:
         db_table = 'tb_curriculo'

@@ -108,6 +108,36 @@ class Usuario(AbstractBaseUser):
         return self.is_admin
 
 
+STATE_CHOICES = (
+    ('AC', 'Acre'), ('AL', 'Alagoas'), ('AP', 'Amapá'),
+    ('AM', 'Amazonas'), ('BA', 'Bahia'), ('CE', 'Ceará'),
+    ('DF', 'Distrito Federal'), ('ES', 'Espírito Santo'),
+    ('GO', 'Goiás'), ('MA', 'Maranhão'), ('MT', 'Mato Grosso'),
+    ('MS', 'Mato Grosso do Sul'), ('MG', 'Minas Gerais'),
+    ('PA', 'Pará'), ('PB', 'Paraíba'), ('PR', 'Paraná'),
+    ('PE', 'Pernambuco'), ('PI', 'Piauí'), ('RJ', 'Rio de Janeiro'),
+    ('RN', 'Rio Grande do Norte'), ('RS', 'Rio Grande do Sul'),
+    ('RO', 'Rondônia'), ('RR', 'Roraima'), ('SC', 'Santa Catarina'),
+    ('SP', 'São Paulo'), ('SE', 'Sergipe'), ('TO', 'Tocantins')
+)
+
+
+class Cidade(models.Model):
+    class Meta:
+        ordering = ('nom_cidade',)
+        db_table = 'tb_cidade'
+
+    cod_cidade = models.IntegerField(primary_key=True, db_column='cod_cidade')
+    cod_estado = models.CharField(max_length=2, choices=STATE_CHOICES)
+    nom_cidade = models.CharField(max_length=255, db_column='nom_cidade')
+
+    def __unicode__(self):
+        return self.nom_cidade
+
+    def __str__(self):
+        return self.nom_cidade
+
+
 class Empresa(models.Model):
     class Meta:
         db_table = 'tb_empresa'
@@ -134,8 +164,7 @@ class Empresa(models.Model):
         null=False,
         blank=False)
 
-    sede = models.ForeignKey('Cidade', db_column='cod_cidade', on_delete=models.CASCADE)
-
+    sede = models.ForeignKey(Cidade, db_column='cod_cidade', on_delete=models.CASCADE)
 
 
 class Curriculo(models.Model):
@@ -477,33 +506,3 @@ class Entrevista(models.Model):
     )
     status = models.ForeignKey(StatusEntrevista, on_delete=models.CASCADE)
     inscricao = models.ForeignKey(Inscricao, db_column='id_inscricao', on_delete=models.CASCADE)
-
-
-STATE_CHOICES = (
-    ('AC', 'Acre'), ('AL', 'Alagoas'), ('AP', 'Amapá'),
-    ('AM', 'Amazonas'), ('BA', 'Bahia'), ('CE', 'Ceará'),
-    ('DF', 'Distrito Federal'), ('ES', 'Espírito Santo'),
-    ('GO', 'Goiás'), ('MA', 'Maranhão'), ('MT', 'Mato Grosso'),
-    ('MS', 'Mato Grosso do Sul'), ('MG', 'Minas Gerais'),
-    ('PA', 'Pará'), ('PB', 'Paraíba'), ('PR', 'Paraná'),
-    ('PE', 'Pernambuco'), ('PI', 'Piauí'), ('RJ', 'Rio de Janeiro'),
-    ('RN', 'Rio Grande do Norte'), ('RS', 'Rio Grande do Sul'),
-    ('RO', 'Rondônia'), ('RR', 'Roraima'), ('SC', 'Santa Catarina'),
-    ('SP', 'São Paulo'), ('SE', 'Sergipe'), ('TO', 'Tocantins')
-)
-
-
-class Cidade(models.Model):
-    class Meta:
-        ordering = ('nom_cidade',)
-        db_table = 'tb_cidade'
-
-    cod_cidade = models.IntegerField(primary_key=True, db_column='cod_cidade')
-    cod_estado = models.CharField(max_length=2, choices=STATE_CHOICES)
-    nom_cidade = models.CharField(max_length=255, db_column='nom_cidade')
-
-    def __unicode__(self):
-        return self.nom_cidade
-
-    def __str__(self):
-        return self.nom_cidade

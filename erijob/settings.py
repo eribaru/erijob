@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_filters',
     'rest_framework',
     'corsheaders',
     'drf_yasg',
@@ -64,7 +65,8 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
-        'knox.auth.TokenAuthentication', ]
+        'knox.auth.TokenAuthentication', ],
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
 
 MIDDLEWARE = [
@@ -173,7 +175,7 @@ REST_KNOX = {
     'TOKEN_TTL': timedelta(minutes=45),  # The default is 10 hours i.e., timedelta(hours=10)).
     'USER_SERIALIZER': 'knox.serializers.UserSerializer',
     'TOKEN_LIMIT_PER_USER': None,  # By default, this option is disabled and set to None -- thus no limit.
-    'AUTO_REFRESH': False,
+    'AUTO_REFRESH': True,
     # This defines if the token expiry time is extended by TOKEN_TTL each time the token is used.
     'EXPIRY_DATETIME_FORMAT': api_settings.DATETIME_FORMAT,
 }

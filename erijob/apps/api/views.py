@@ -2,7 +2,9 @@
 from django.contrib.auth import login
 from django.contrib.auth.models import Group
 from django.views.decorators.csrf import csrf_exempt
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, permissions
+from rest_framework import filters
 from rest_framework.authentication import BasicAuthentication
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.mixins import CreateModelMixin
@@ -58,14 +60,16 @@ class EmpresaViewSet(viewsets.ModelViewSet):
     queryset = Empresa.objects.all()
     serializer_class = EmpresaSerializer
     permission_classes = [permissions.IsAuthenticated]
-
+    filterset_fields = ['sede', 'ramo']
 
 
 class CidadeViewSet(viewsets.ModelViewSet):
     queryset = Cidade.objects.all()
     serializer_class = CidadeSerializer
     permission_classes = [permissions.IsAuthenticated]
-    filterset_fields = ['cod_estado', 'nom_cidade']
+    filter_backends = [DjangoFilterBackend,filters.SearchFilter]
+    filterset_fields = ['cod_estado']
+    search_fields = ['nom_cidade']
 
 
 class ExperienciaViewSet(viewsets.ModelViewSet):

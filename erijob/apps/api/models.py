@@ -164,7 +164,7 @@ class Empresa(models.Model):
         null=False,
         blank=False)
 
-    sede = models.ForeignKey(Cidade, db_column='cod_cidade', on_delete=models.CASCADE)
+    sede = models.ForeignKey(Cidade, db_column='cod_cidade', on_delete=models.CASCADE,  blank=True, null=True)
 
 
 class Curriculo(models.Model):

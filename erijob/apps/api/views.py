@@ -61,6 +61,7 @@ class EmpresaViewSet(viewsets.ModelViewSet):
     serializer_class = EmpresaSerializer
     permission_classes = [permissions.IsAuthenticated]
     filterset_fields = ['sede', 'ramo']
+    search_fields = ['nome']
 
 
 class CidadeViewSet(viewsets.ModelViewSet):

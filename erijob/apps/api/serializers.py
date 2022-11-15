@@ -130,6 +130,6 @@ class VagaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vaga
         fields = [
-            'id', 'area', 'cargo', 'resposabilidades', 'requisitos', 'pcsc', 'remoto', 'local', 'cargo_horaria',
+            'id', 'area', 'cargo', 'resposabilidades', 'requisitos', 'pcsc', 'remoto', 'local', 'carga_horaria',
             'data_cadastro', 'data_fechamento', 'tipo_contrato', 'contratacao', 'empresa',
         ]

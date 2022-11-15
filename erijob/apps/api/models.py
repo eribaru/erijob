@@ -226,7 +226,7 @@ class Formacao(models.Model):
 
     TIPO_FORMACAO = [
         ('médio', 'Médio'), ('superior', 'Superior'), ('especialização', 'Especialização'), ('mestrado', 'Mestrado'),
-        ('doutorado', 'doutorado'),
+        ('doutorado', 'Doutorado'),
     ]
 
     id = models.UUIDField(
@@ -300,11 +300,6 @@ class Experiencia(models.Model):
         ordering = ('inicio',)
         db_table = 'tb_experiencia'
 
-    TIPO_FORMACAO = [
-        ('médio', 'Médio'), ('superior', 'Superior'), ('especialização', 'Especialização'), ('mestrado', 'Mestrado'),
-        ('doutorado', 'doutorado'),
-    ]
-
     id = models.UUIDField(
         primary_key=True,
         default=uuid.uuid4,
@@ -320,12 +315,6 @@ class Experiencia(models.Model):
         max_length=4000,
         null=False,
         blank=False)
-
-    local = models.CharField(
-        max_length=30,
-        null=False,
-        blank=False,
-        choices=TIPO_FORMACAO)
 
     inicio = models.DateField(
         null=False,
@@ -350,7 +339,7 @@ class Vaga(models.Model):
         db_table = 'tb_vaga'
 
     TIPO_CONTRATO = [
-        ('indeterminado', 'Indeterminado'), ('indeterminado', 'Determinado'), ('obra_certa', 'Obra certa'),
+        ('indeterminado', 'Indeterminado'), ('determinado', 'Determinado'), ('obra_certa', 'Obra certa'),
         ('intermitente', 'Intermitente'),
     ]
     TIPO_REGIME = [
@@ -393,27 +382,16 @@ class Vaga(models.Model):
         blank=False,
     )
 
-    local = models.CharField(
+    local = models.TextField(
         max_length=255,
-        null=False,
-        blank=False)
-
-    departamento = models.CharField(
-        max_length=255,
-        null=False,
-        blank=False)
-
+        null=True,
+        blank=True)
     faixa_salarial = models.CharField(
         max_length=255,
         null=False,
         blank=False)
 
-    local = models.CharField(
-        max_length=255,
-        null=False,
-        blank=False)
-
-    cargo_horaria = models.CharField(
+    carga_horaria = models.CharField(
         max_length=255,
         null=False,
         blank=False)
@@ -439,15 +417,6 @@ class Vaga(models.Model):
         null=False,
         blank=False,
         choices=TIPO_REGIME)
-
-    fim = models.DateField(
-        null=False,
-        blank=False)
-
-    atual = models.BooleanField(
-        null=False,
-        blank=False,
-    )
 
     empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
 

@@ -12,11 +12,11 @@ from rest_framework.viewsets import GenericViewSet
 from knox.views import LoginView as KnoxLoginView
 
 from erijob.apps.api.models import Empresa, Cidade, Curriculo, InstituicaoEnsino, Formacao, StatusInscricao, \
-    StatusEntrevista, Experiencia, Inscricao, Vaga, Usuario
+    StatusEntrevista, Experiencia, Inscricao, Vaga, Usuario, Entrevista, Endereco
 from erijob.apps.api.serializers import EmpresaSerializer, CidadeSerializer, \
     CurriculoSerializer, InstituicaoEnsinoSerializer, FormacaoSerializer, StatusInscricaoSerializer, \
     StatusEntrevistaSerializer, ExperienciaSerializer, InscricaoSerializer, VagaSerializer, UsuarioSerializer, \
-    GroupSerializer, UsuarioCadastroSerializer
+    GroupSerializer, UsuarioCadastroSerializer, EntrevistaSerializer, EnderecoSerializer
 
 
 class GroupViewSet(viewsets.ModelViewSet):
@@ -68,7 +68,7 @@ class CidadeViewSet(viewsets.ModelViewSet):
     queryset = Cidade.objects.all()
     serializer_class = CidadeSerializer
     permission_classes = [permissions.IsAuthenticated]
-    filter_backends = [DjangoFilterBackend,filters.SearchFilter]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ['cod_estado']
     search_fields = ['nom_cidade']
 
@@ -77,6 +77,7 @@ class ExperienciaViewSet(viewsets.ModelViewSet):
     queryset = Experiencia.objects.all()
     serializer_class = ExperienciaSerializer
     permission_classes = [permissions.IsAuthenticated]
+    filterset_fields = ['curriculo']
 
 
 class InstituicaoEnsinoViewSet(viewsets.ModelViewSet):
@@ -89,12 +90,21 @@ class FormacaoViewSet(viewsets.ModelViewSet):
     queryset = Formacao.objects.all()
     serializer_class = FormacaoSerializer
     permission_classes = [permissions.IsAuthenticated]
+    filterset_fields = ['curriculo']
+
+
+class EnderecoViewSet(viewsets.ModelViewSet):
+    queryset = Endereco.objects.all()
+    serializer_class = EnderecoSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    filterset_fields = ['usuario', 'empresa', 'tipo']
 
 
 class CurriculoViewSet(viewsets.ModelViewSet):
     queryset = Curriculo.objects.all()
     serializer_class = CurriculoSerializer
     permission_classes = [permissions.IsAuthenticated]
+    filterset_fields = ['usuario']
 
 
 class StatusInscricaoViewSet(viewsets.ModelViewSet):
@@ -109,10 +119,18 @@ class StatusEntrevistaViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
 
+class EntrevistaViewSet(viewsets.ModelViewSet):
+    queryset = Entrevista.objects.all()
+    serializer_class = EntrevistaSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    filterset_fields = ['usuario']
+
+
 class InscricaoViewSet(viewsets.ModelViewSet):
     queryset = Inscricao.objects.all()
     serializer_class = InscricaoSerializer
     permission_classes = [permissions.IsAuthenticated]
+    filterset_fields = ['usuario']
 
 
 class VagaViewSet(viewsets.ModelViewSet):

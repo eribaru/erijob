@@ -164,7 +164,71 @@ class Empresa(models.Model):
         null=False,
         blank=False)
 
-    sede = models.ForeignKey(Cidade, db_column='cod_cidade', on_delete=models.CASCADE,  blank=True, null=True)
+    sede = models.ForeignKey(Cidade, db_column='cod_cidade', on_delete=models.CASCADE, blank=True, null=True,
+                             parent_link=True)
+
+
+class Endereco(models.Model):
+    class Meta:
+        db_table = 'tb_endereco'
+
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        null=False,
+        blank=True)
+
+    apelido = models.CharField(
+        max_length=255,
+        null=True,
+        unique=True,
+        blank=True)
+
+    rua = models.CharField(
+        max_length=255,
+        null=False,
+        blank=False)
+
+    complemento = models.CharField(
+        max_length=255,
+        null=True,
+        unique=True,
+        blank=True)
+
+    numero = models.CharField(
+        max_length=25,
+        null=False,
+        unique=False,
+        blank=False)
+
+    bairro = models.CharField(
+        max_length=255,
+        null=False,
+        unique=False,
+        blank=False)
+
+    cidade = models.ForeignKey(Cidade, db_column='cod_cidade', on_delete=models.CASCADE, blank=True, null=True,
+                               parent_link=True)
+
+    cep = models.CharField(
+        max_length=8,
+        null=False,
+        blank=False)
+
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+
+    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
+
+    tipo = models.CharField(
+        max_length=25,
+        null=False,
+        unique=False,
+        blank=False)
+
+    principal = models.BooleanField(
+        null=False,
+        unique=False,
+        blank=False)
 
 
 class Curriculo(models.Model):
@@ -225,7 +289,7 @@ class Formacao(models.Model):
         db_table = 'tb_formacao'
 
     TIPO_FORMACAO = [
-        ('médio', 'Médio'), ('superior', 'Superior'), ('especialização', 'Especialização'), ('mestrado', 'Mestrado'),
+        ('medio', 'Médio'), ('superior', 'Superior'), ('especializacao', 'Especialização'), ('mestrado', 'Mestrado'),
         ('doutorado', 'Doutorado'),
     ]
 

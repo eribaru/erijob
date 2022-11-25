@@ -70,6 +70,14 @@ class ExperienciaSerializer(serializers.ModelSerializer):
         ]
 
 
+class EnderecoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Endereco
+        fields = [
+            'id', 'rua', 'numero', 'complemento', 'bairro', 'cep', 'cidade', 'tipo', 'apelido', 'empresa', 'curriculo', 'principal'
+        ]
+
+
 class CurriculoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Curriculo

@@ -167,6 +167,12 @@ class Empresa(models.Model):
     sede = models.ForeignKey(Cidade, db_column='cod_cidade', on_delete=models.CASCADE, blank=True, null=True,
                              parent_link=True)
 
+    def __unicode__(self):
+        return self.nome
+
+    def __str__(self):
+        return self.nome
+
 
 class Endereco(models.Model):
     class Meta:
@@ -181,7 +187,7 @@ class Endereco(models.Model):
     apelido = models.CharField(
         max_length=255,
         null=True,
-        unique=True,
+        unique=False,
         blank=True)
 
     rua = models.CharField(
@@ -217,7 +223,8 @@ class Endereco(models.Model):
 
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
 
-    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
+    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE, null=True,
+                                blank=True)
 
     tipo = models.CharField(
         max_length=25,
@@ -229,6 +236,12 @@ class Endereco(models.Model):
         null=False,
         unique=False,
         blank=False)
+
+    def __unicode__(self):
+        return self.apelido
+
+    def __str__(self):
+        return self.apelido
 
 
 class Curriculo(models.Model):
@@ -281,6 +294,12 @@ class InstituicaoEnsino(models.Model):
         blank=False)
 
     sede = models.ForeignKey('Cidade', db_column='cod_cidade', on_delete=models.CASCADE)
+
+    def __unicode__(self):
+        return self.nome
+
+    def __str__(self):
+        return self.nome
 
 
 class Formacao(models.Model):
@@ -357,6 +376,12 @@ class StatusInscricao(models.Model):
         max_length=255,
         null=False,
         blank=False)
+
+    def __unicode__(self):
+        return self.valor
+
+    def __str__(self):
+        return self.valor
 
 
 class Experiencia(models.Model):

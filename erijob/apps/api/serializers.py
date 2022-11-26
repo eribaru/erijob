@@ -18,7 +18,7 @@ class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
         fields = [
-            'url', 'email', 'date_of_birth', 'telefone', 'tipo', 'cpf'
+            'url', 'email', 'date_of_birth', 'telefone', 'tipo', 'cpf', 'id'
         ]
 
 
@@ -74,7 +74,7 @@ class EnderecoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Endereco
         fields = [
-            'id', 'rua', 'numero', 'complemento', 'bairro', 'cep', 'cidade', 'tipo', 'apelido', 'empresa', 'principal'
+            'id', 'rua', 'numero', 'complemento', 'bairro', 'cep', 'cidade', 'tipo', 'apelido', 'empresa', 'principal','usuario'
         ]
 
 

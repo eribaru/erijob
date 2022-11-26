@@ -3,6 +3,8 @@ from django.contrib.auth import login
 from django.contrib.auth.models import Group
 from django.views.decorators.csrf import csrf_exempt
 from django_filters.rest_framework import DjangoFilterBackend
+from httpie import status
+from requests import Response
 from rest_framework import viewsets, permissions
 from rest_framework import filters
 from rest_framework.authentication import BasicAuthentication

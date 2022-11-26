@@ -66,7 +66,7 @@ class ExperienciaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Experiencia
         fields = [
-            'id', 'area', 'cargo', 'local', 'inicio', 'fim', 'atual', 'empresa', 'curriculo'
+            'id', 'area', 'cargo', 'inicio', 'fim', 'atual', 'empresa', 'curriculo'
         ]
 
 
@@ -74,7 +74,7 @@ class EnderecoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Endereco
         fields = [
-            'id', 'rua', 'numero', 'complemento', 'bairro', 'cep', 'cidade', 'tipo', 'apelido', 'empresa', 'curriculo', 'principal'
+            'id', 'rua', 'numero', 'complemento', 'bairro', 'cep', 'cidade', 'tipo', 'apelido', 'empresa', 'principal'
         ]
 
 

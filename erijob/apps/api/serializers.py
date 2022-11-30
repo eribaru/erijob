@@ -74,7 +74,7 @@ class EnderecoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Endereco
         fields = [
-            'id', 'rua', 'numero', 'complemento', 'bairro', 'cep', 'cidade', 'tipo', 'apelido', 'empresa', 'principal','usuario'
+            'id', 'rua', 'numero', 'complemento', 'bairro', 'cep', 'cidade', 'tipo', 'apelido', 'empresa', 'principal','usuario', 'resumo'
         ]
 
 

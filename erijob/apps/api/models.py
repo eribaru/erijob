@@ -2,6 +2,7 @@ import uuid
 
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.db import models
+from select import select
 
 
 class MyUserManager(BaseUserManager):
@@ -242,6 +243,20 @@ class Endereco(models.Model):
 
     def __str__(self):
         return self.apelido
+
+    def get_cidade(self):
+        cidade: Cidade
+        return cidade
+
+    def resumo(self):
+        resumo = self.rua + " " + self.numero
+        if self.complemento is not None:
+            resumo = resumo + ", " + self.complemento
+        cep_formatado = '{}-{}'.format(self.cep[0:5], self.cep[5:7])
+        #cidade = Cidade.objects.get()
+        resumo = resumo + " " + self.bairro + "\ncep " + cep_formatado
+        resumo = resumo + " "  + self.cidade.nom_cidade + "/" + self.cidade.cod_estado
+        return resumo
 
 
 class Curriculo(models.Model):

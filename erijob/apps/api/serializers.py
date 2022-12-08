@@ -74,7 +74,8 @@ class EnderecoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Endereco
         fields = [
-            'id', 'rua', 'numero', 'complemento', 'bairro', 'cep', 'cidade', 'tipo', 'apelido', 'empresa', 'principal','usuario', 'resumo'
+            'id', 'rua', 'numero', 'complemento', 'bairro', 'cep', 'cidade', 'tipo', 'apelido', 'empresa', 'principal',
+            'usuario', 'resumo'
         ]
 
 
@@ -123,6 +124,7 @@ class InscricaoSerializer(serializers.ModelSerializer):
         model = Inscricao
         fields = [
             'id', 'feedback', 'data_inscricao', 'apto_entrevista', 'vaga', 'feedback', 'usuario', 'status',
+            'status_nome', 'vaga_nome', 'usuario_nome'
         ]
 
 

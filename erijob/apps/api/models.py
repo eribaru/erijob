@@ -436,6 +436,9 @@ class Experiencia(models.Model):
     empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
     curriculo = models.ForeignKey(Curriculo, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.cargo
+
 
 class Vaga(models.Model):
     class Meta:
@@ -524,6 +527,9 @@ class Vaga(models.Model):
 
     empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.cargo
+
 
 class Inscricao(models.Model):
     class Meta:
@@ -542,9 +548,10 @@ class Inscricao(models.Model):
         blank=True, )
 
     data_inscricao = models.DateField(
-        null=False,
-        blank=False,
-        auto_created=True
+        null=True,
+        blank=True,
+        auto_created=True,
+        auto_now_add=True
     )
 
     apto_entrevista = models.BooleanField(
@@ -555,6 +562,21 @@ class Inscricao(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     status = models.ForeignKey(StatusInscricao, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.usuario + '/'+self.vaga
+
+    def status_nome(self):
+        return self.status.valor
+
+    def vaga_nome(self):
+        return self.vaga.cargo
+
+    def usuario_nome(self):
+        return self.usuario.nome
+
+    def esta_apto(self):
+
+        return self.usuario.nome
 
 class Entrevista(models.Model):
     class Meta:

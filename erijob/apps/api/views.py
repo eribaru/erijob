@@ -132,7 +132,7 @@ class InscricaoViewSet(viewsets.ModelViewSet):
     queryset = Inscricao.objects.all()
     serializer_class = InscricaoSerializer
     permission_classes = [permissions.IsAuthenticated]
-    filterset_fields = ['usuario']
+    filterset_fields = ['usuario', 'vaga']
 
 
 class VagaViewSet(viewsets.ModelViewSet):

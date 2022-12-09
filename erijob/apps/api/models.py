@@ -251,9 +251,10 @@ class Endereco(models.Model):
         if self.complemento is not None:
             resumo = resumo + ", " + self.complemento
         cep_formatado = '{}-{}'.format(self.cep[0:5], self.cep[5:7])
-        #cidade = Cidade.objects.get()
+        # cidade = Cidade.objects.get()
         resumo = resumo + " " + self.bairro + "\ncep " + cep_formatado
-        resumo = resumo + " "  + self.cidade.nom_cidade + "/" + self.cidade.cod_estado
+        if self.cidade is not None:
+            resumo = resumo + " " + self.cidade.nom_cidade + "/" + self.cidade.cod_estado
         return resumo
 
 
@@ -561,7 +562,7 @@ class Inscricao(models.Model):
     status = models.ForeignKey(StatusInscricao, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.usuario + '/'+self.vaga
+        return self.usuario + '/' + self.vaga
 
     def status_nome(self):
         return self.status.valor
@@ -573,8 +574,8 @@ class Inscricao(models.Model):
         return self.usuario.nome
 
     def esta_apto(self):
-
         return self.usuario.nome
+
 
 class Entrevista(models.Model):
     class Meta:

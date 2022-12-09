@@ -199,13 +199,11 @@ class Endereco(models.Model):
     complemento = models.CharField(
         max_length=255,
         null=True,
-        unique=True,
         blank=True)
 
     numero = models.CharField(
         max_length=25,
         null=False,
-        unique=False,
         blank=False)
 
     bairro = models.CharField(

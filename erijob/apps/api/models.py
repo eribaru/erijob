@@ -2,6 +2,7 @@ import uuid
 
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.db import models
+from django.db.models import UniqueConstraint, Q
 from select import select
 
 
@@ -178,6 +179,9 @@ class Empresa(models.Model):
 class Endereco(models.Model):
     class Meta:
         db_table = 'tb_endereco'
+        constraints = [
+            models.UniqueConstraint(fields=['usuario', 'apelido'],  name='usuario_apelido')
+        ]
 
     id = models.UUIDField(
         primary_key=True,
@@ -235,6 +239,8 @@ class Endereco(models.Model):
         null=False,
         unique=False,
         blank=False)
+
+
 
     def __unicode__(self):
         return self.apelido

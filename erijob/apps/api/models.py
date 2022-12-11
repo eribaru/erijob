@@ -179,9 +179,6 @@ class Empresa(models.Model):
 class Endereco(models.Model):
     class Meta:
         db_table = 'tb_endereco'
-        constraints = [
-            models.UniqueConstraint(fields=['usuario', 'apelido'],  name='usuario_apelido')
-        ]
 
     id = models.UUIDField(
         primary_key=True,
